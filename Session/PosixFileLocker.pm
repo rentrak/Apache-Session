@@ -106,9 +106,8 @@ sub release_all_locks  {
     my $self    = shift;
     my $session = shift;
 
-    flock($self->{fh}, LOCK_UN);
-
     if ($self->{opened}) {
+        flock($self->{fh}, LOCK_UN);
         close $self->{fh} || die $!;
     }
     

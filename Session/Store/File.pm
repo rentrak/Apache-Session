@@ -10,6 +10,7 @@
 package Apache::Session::Store::File;
 
 use strict;
+use IO::File;
 use Symbol;
 use Fcntl;
 use vars qw($VERSION);
@@ -45,6 +46,7 @@ sub insert {
     $self->{opened} = 1;
     
     print {$self->{fh}} $session->{serialized};
+    $self->{fh}->flush();
 }
 
 sub update {
@@ -64,6 +66,7 @@ sub update {
     truncate($self->{fh}, 0) || die "Could not truncate file: $!";
     seek($self->{fh}, 0, 0);
     print {$self->{fh}} $session->{serialized};
+    $self->{fh}->flush();
 }
 
 sub materialize {

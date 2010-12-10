@@ -87,6 +87,8 @@ sub materialize {
             seek($self->{fh}, 0, 0) || die "Could not seek file: $!";
         }
         
+        $session->{serialized} = '';
+
         my $fh = $self->{fh};
         while (my $line = <$fh>) {
             $session->{serialized} .= $line;
